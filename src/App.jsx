@@ -1,14 +1,13 @@
 import { useState } from "react";
-import "./App.css";
+import "./index.css";
+import HomePage from "./pages/HomePage";
+import UserLoginForm from "./components/user-components/LoginForm/UserLoginForm";
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
     <>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <HomePage />
+      <UserLoginForm />
     </>
   );
 }
