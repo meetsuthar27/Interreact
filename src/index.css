@@ -11,7 +11,7 @@
   --light: #bdcaff; /* Light Gray */
   --board: #414558; /* Red Accent */
   --border: #545970; /* Muted Blue */
-  --subboard: #3a3e4f; /* Dark Background */
+  --subboard: hsl(230, 16%, 25%); /* Dark Background */
 }
 
 .jet-light {
