@@ -8,9 +8,10 @@
   --font-extrabold: 800;
   /* Color Variables */
   --main: #323541; /* Dark Blue */
+  --darkmain: #2b2d37; /* Dark Blue */
   --light: #bdcaff; /* Light Gray */
   --board: #414558; /* Red Accent */
-  /* --border: #545970; Muted Blue */
+  --border: #545970;
   --subboard: hsl(230, 16%, 25%); /* Dark Background */
 }
 

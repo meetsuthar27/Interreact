@@ -18,7 +18,7 @@ const Custom = () => {
 
   return (
     <div className="flex gap-8 p-8">
-      {/* Component Preview */}
+      {/* Component Preview */}q
       <div className="scale-[0.8] origin-top-left">
         <h2 className="font-bold text-lg mb-4">Live Preview</h2>
         <ComponentRenderer
@@ -26,7 +26,6 @@ const Custom = () => {
           attributes={attributes}
         />
       </div>
-
       {/* Customization Panel */}
       <div className="flex flex-col gap-4 p-4 border rounded-md">
         <h2 className="font-bold text-lg">Customize</h2>
