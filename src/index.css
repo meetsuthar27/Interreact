@@ -10,7 +10,7 @@
   --main: #323541; /* Dark Blue */
   --light: #bdcaff; /* Light Gray */
   --board: #414558; /* Red Accent */
-  --border: #545970; /* Muted Blue */
+  /* --border: #545970; Muted Blue */
   --subboard: hsl(230, 16%, 25%); /* Dark Background */
 }
 
