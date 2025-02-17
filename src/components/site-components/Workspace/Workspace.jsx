@@ -7,9 +7,9 @@ import Text from "./Toolbar/Text";
 
 function Workspace() {
   return (
-    <div className="flex uppercase jet-normal bg-[var(--main)] h-[calc(100vh-3.5rem)]">
+    <div className="flex uppercase bg-[var(--main)] h-[calc(100vh-3.5rem)]">
       {/* Sidebar */}
-      <div className="basis-1/4 m-4 bg-[var(--board)] border-[1px] border-[var(--border)] rounded-xl shadow-2xl flex-col pl-4 p-3">
+      <div className="basis-1/4 m-4  bg-[var(--board)] border-[1px] border-[var(--border)] rounded-xl shadow-2xl flex-col pl-4 p-3">
         <div className="jet-bold select-none text-[0.7em] text-center text-[var(--border)]">
           - toolbar -
         </div>
