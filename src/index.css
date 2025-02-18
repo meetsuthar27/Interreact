@@ -12,7 +12,12 @@
   --light: #bdcaff; /* Light Gray */
   --board: #414558; /* Red Accent */
   --border: #545970;
+  --border3: rgb(101, 107, 132);
+  --border2: #54597055;
   --subboard: hsl(230, 16%, 25%); /* Dark Background */
+  --subboard2: #36394a; /* Dark Background */
+  --l1: #e7e8eb;
+  --l2: #c6c6c68b;
 }
 
 .jet-light {
@@ -33,4 +38,26 @@
 .jet-extrabold {
   font-family: var(--font-jet);
   font-weight: var(--font-extrabold);
+}
+
+.pattern {
+  background-color: hsl(230, 16%, 25%);
+  opacity: 0.8;
+  background-image: linear-gradient(var(--border2) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border2) 1px, transparent 1px),
+    linear-gradient(var(--border2) 0.5px, transparent 0.5px),
+    linear-gradient(90deg, var(--border2) 0.5px, hsl(230, 16%, 25%) 0.5px);
+  background-size: 25px 25px, 25px 25px, 5px 5px, 5px 5px;
+  background-position: -2px -2px, -2px -2px, -1px -1px, -1px -1px;
+}
+
+.pattern2 {
+  background-color: var(--l1);
+  opacity: 0.8;
+  background-image: linear-gradient(var(--l2) 1px, transparent 1px),
+    linear-gradient(90deg, var(--l2) 1px, transparent 1px),
+    linear-gradient(var(--l2) 0.5px, transparent 0.5px),
+    linear-gradient(90deg, var(--l2) 0.5px, var(--l1) 0.5px);
+  background-size: 25px 25px, 25px 25px, 5px 5px, 5px 5px;
+  background-position: -2px -2px, -2px -2px, -1px -1px, -1px -1px;
 }
