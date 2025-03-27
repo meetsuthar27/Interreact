@@ -12,25 +12,26 @@ function Workspace() {
   return (
     <div className="flex overscroll-none uppercase jet-normal bg-[var(--main)] h-[calc(100vh-3.5rem)]">
       {/* Sidebar */}
-      <div className="basis-1/4 m-4  bg-[var(--board)] border-[1px] border-[var(--border)] rounded-xl shadow-2xl flex-col pl-4 p-3">
+      <div className="basis-1/4 m-4  bg-[var(--board)] border-[1px] border-[var(--border)] rounded-xl shadow-2xl flex-col pl-4 p-3 overflow-scroll">
         <div className="jet-bold select-none text-[0.7em] text-center text-[var(--border)]">
           - toolbar -
         </div>
+        <div className="flex flex-col ">
+          {/* Background Section */}
+          <Background />
 
-        {/* Background Section */}
-        <Background />
+          {/* Border Section */}
+          <Border />
 
-        {/* Border Section */}
-        <Border />
+          {/*Shadow Section */}
+          <Shadow />
 
-        {/*Shadow Section */}
-        <Shadow />
+          {/*Text Section */}
+          <Text />
 
-        {/*Text Section */}
-        <Text />
-
-        {/*Transform Section */}
-        <Transform />
+          {/*Transform Section */}
+          <Transform />
+        </div>
       </div>
 
       {/* Main Content */}

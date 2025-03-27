@@ -1,9 +1,6 @@
 import React, { useState } from "react";
 import { IoOptions } from "react-icons/io5";
 import { MdInvertColors } from "react-icons/md";
-import { TbRadiusBottomRight } from "react-icons/tb";
-import { RxWidth } from "react-icons/rx";
-import { RxShadow } from "react-icons/rx";
 import { TbWashDryShade } from "react-icons/tb";
 import Demo from "../../Demo";
 

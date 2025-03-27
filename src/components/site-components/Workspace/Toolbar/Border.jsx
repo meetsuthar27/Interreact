@@ -5,7 +5,7 @@ import { TbRadiusBottomRight } from "react-icons/tb";
 import { RxWidth } from "react-icons/rx";
 import Demo from "../../Demo";
 
-function WorkSpaceBorder() {
+function Border() {
   const [borderWidth, setBorderWidth] = useState(2); // Default value
   const [unit, setUnit] = useState("px"); // Default unit
 
@@ -167,4 +167,4 @@ function WorkSpaceBorder() {
   );
 }
 
-export default WorkSpaceBorder;
+export default Border;
