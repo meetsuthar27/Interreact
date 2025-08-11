@@ -1,5 +1,5 @@
-export default function Example() {
-  // Define Tailwind classes as an object
+export default function Example({ componentProps }) {
+  const { background, border, shadow, text, transform } = componentProps;
 
   const styles = {
     textColor: "text-gray-900",
@@ -9,16 +9,20 @@ export default function Example() {
     tracking: "tracking-wide",
     bgColor: "bg-indigo-600",
     bgHover: "hover:bg-indigo-500",
-    outline: "outline-gray-300",
+    border: "border-red ",
     outlineFocus: "focus:outline-indigo-600",
     borderRadius: "rounded-md",
+    borderWidth: `border-[${border.width}]`,
     inputBg: "bg-gray-100",
     buttonText: `text-[#ffffff]`, // Using template literals for correct syntax
   };
+
+  console.log(border.width);
+
   return (
     <>
       <div
-        className={`flex min-h-full w-[30em] flex-1 flex-col normal-case justify-center px-6 py-6 lg:px-8`}
+        className={`flex min-h-full w-[30em] border-red-500 ${styles.borderWidth} flex-1 flex-col normal-case justify-center px-6 py-6 lg:px-8`}
       >
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <h2
@@ -44,7 +48,7 @@ export default function Example() {
                   type="email"
                   required
                   autoComplete="email"
-                  className={`block w-full ${styles.borderRadius} ${styles.inputBg} px-3 py-1.5 text-base ${styles.textColor} outline-1 -outline-offset-1 ${styles.outline} placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 ${styles.outlineFocus} sm:text-sm/6`}
+                  className={`block w-full ${styles.borderWidth} ${styles.borderRadius} ${styles.inputBg} px-3 py-1.5 text-base ${styles.textColor} ${styles.outline} placeholder:text-gray-400 ${styles.outlineFocus} sm:text-sm/6`}
                 />
               </div>
             </div>

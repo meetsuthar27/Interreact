@@ -3,7 +3,7 @@ import { FiSun, FiMoon } from "react-icons/fi"; // Import icons for the toggle b
 import BadgeComponent from "../../../user-components/BadgeComponent";
 import Example from "../../../user-components/trial/Example";
 
-function ComponentPreview() {
+function ComponentPreview({ componentProps }) {
   const [isDark, setIsDark] = useState(true); // Track theme (default: dark)
 
   return (
@@ -25,7 +25,7 @@ function ComponentPreview() {
       </button>
 
       <div className="font-sans bg-white rounded-xl case-normal ">
-        <Example />
+        <Example componentProps={componentProps} />
       </div>
     </div>
   );

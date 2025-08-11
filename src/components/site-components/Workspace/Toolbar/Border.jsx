@@ -5,9 +5,26 @@ import { TbRadiusBottomRight } from "react-icons/tb";
 import { RxWidth } from "react-icons/rx";
 import Demo from "../../Demo";
 
-function Border() {
+function Border({ setComponentProps }) {
   const [borderWidth, setBorderWidth] = useState(2); // Default value
   const [unit, setUnit] = useState("px"); // Default unit
+
+  const updateBorderWidth = (newWidth) => {
+    const validWidth = Math.max(0, newWidth); // Prevent negative values
+    setBorderWidth(validWidth);
+    setComponentProps((prev) => ({
+      ...prev,
+      border: { ...prev.border, width: `${validWidth}${unit}` },
+    }));
+  };
+
+  const updateUnit = (newUnit) => {
+    setUnit(newUnit);
+    setComponentProps((prev) => ({
+      ...prev,
+      border: { ...prev.border, width: `${borderWidth}${newUnit}` }, // Keep the same number
+    }));
+  };
 
   const increaseWidth = () => setBorderWidth((prev) => prev + 1);
   const decreaseWidth = () =>
@@ -43,11 +60,17 @@ function Border() {
             {borderStyles.map((style) => (
               <button
                 key={style}
-                onClick={() => setSelectedStyle(style)}
-                className={`p-1 px-2  text-[0.8em] uppercase flex-1 text-center rounded-md ${
+                onClick={() => {
+                  setSelectedStyle(style); // Update active style
+                  setComponentProps((prev) => ({
+                    ...prev,
+                    border: { ...prev.border, type: style },
+                  }));
+                }}
+                className={`p-1 px-2 text-[0.8em] uppercase flex-1 text-center rounded-md ${
                   selectedStyle === style
-                    ? "bg-[var(--darkmain)] rounded-md text-gray-300 border-[var(--main)]"
-                    : "bg-[var(--subboard)] text-gray-500 hover:bg-[var(--light)] transition duration-300 ease-in-out  hover:text-[var(--main)]"
+                    ? "bg-[var(--darkmain)] text-gray-300 border-[var(--main)]"
+                    : "bg-[var(--subboard)] text-gray-500 hover:bg-[var(--light)] transition duration-300 ease-in-out hover:text-[var(--main)]"
                 }`}
               >
                 {style}
@@ -84,23 +107,23 @@ function Border() {
             {/* Decrease Button */}
             <button
               onClick={decreaseWidth}
-              className="p-1 px-2 text-[0.8em] bg-[var(--darkmain)] text-gray-300 hover:bg-[var(--light)] transition duration-300 ease-in-out  hover:text-[var(--main)] rounded-l-md"
+              className="p-1 px-2 text-[0.8em] bg-[var(--darkmain)] text-gray-300 hover:bg-[var(--light)] transition duration-300 ease-in-out hover:text-[var(--main)] rounded-l-md"
             >
               -
             </button>
 
-            {/* Number Input (Editable) */}
+            {/* Number Input */}
             <input
               type="number"
               value={borderWidth}
-              onChange={(e) => setBorderWidth(Number(e.target.value))}
+              onChange={(e) => updateBorderWidth(Number(e.target.value))}
               className="w-10 text-center bg-[var(--subboard)] text-[0.8em] text-gray-300 p-1 outline-none"
             />
 
             {/* Increase Button */}
             <button
               onClick={increaseWidth}
-              className="p-1 px-2 text-[0.8em] bg-[var(--darkmain)] text-gray-300 hover:bg-[var(--light)] transition duration-300 ease-in-out  hover:text-[var(--main)] rounded-r-md"
+              className="p-1 px-2 text-[0.8em] bg-[var(--darkmain)] text-gray-300 hover:bg-[var(--light)] transition duration-300 ease-in-out hover:text-[var(--main)] rounded-r-md"
             >
               +
             </button>
@@ -108,8 +131,8 @@ function Border() {
             {/* Unit Selector */}
             <select
               value={unit}
-              onChange={(e) => setUnit(e.target.value)}
-              className="p-1 px-2 uppercase ml-1 bg-[var(--subboard)] text-[0.8em] text-gray-500 hover:bg-[var(--light)] transition duration-300 ease-in-out  hover:text-[var(--main)] rounded-md"
+              onChange={(e) => updateUnit(e.target.value)}
+              className="p-1 px-2 uppercase ml-1 bg-[var(--subboard)] text-[0.8em] text-gray-500 hover:bg-[var(--light)] transition duration-300 ease-in-out hover:text-[var(--main)] rounded-md"
             >
               <option value="px">px</option>
               <option value="rem">rem</option>
