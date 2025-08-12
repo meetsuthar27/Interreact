@@ -96,6 +96,102 @@ export default function NewExcel() {
 }
 `;
 
+  const codeString2 = `import React, { useState } from 'react';
+import * as XLSX from 'xlsx';
+
+function ExcelUploader() {
+  const [data, setData] = useState([]);
+  const [errors, setErrors] = useState({}); // Store errors by row & column
+
+  const requiredColumns = ['Name', 'Email', 'DateOfBirth'];
+
+  const validateRow = (row, rowIndex) => {
+    let rowErrors = {};
+    // Example validation: Email must include '@'
+    if (!row.Email || !row.Email.includes('@')) {
+      rowErrors.Email = 'Invalid email format';
+    }
+    // Date validation (very basic)
+    if (!row.DateOfBirth || isNaN(Date.parse(row.DateOfBirth))) {
+      rowErrors.DateOfBirth = 'Invalid date';
+    }
+    return rowErrors;
+  };
+
+  const handleFileUpload = (e) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+
+    reader.onload = (evt) => {
+      const bstr = evt.target.result;
+      const workbook = XLSX.read(bstr, { type: 'binary' });
+      const sheetName = workbook.SheetNames[0];
+      const worksheet = workbook.Sheets[sheetName];
+      const jsonData = XLSX.utils.sheet_to_json(worksheet, { defval: '' });
+
+      // Validate required columns
+      const headers = Object.keys(jsonData[0] || {});
+      const missingCols = requiredColumns.filter(col => !headers.includes(col));
+      if (missingCols.length > 0) {
+        alert('Missing required columns: ' + missingCols.join(', '));
+        return;
+      }
+
+      // Validate each row
+      let allErrors = {};
+      jsonData.forEach((row, idx) => {
+        const rowError = validateRow(row, idx);
+        if (Object.keys(rowError).length > 0) {
+          allErrors[idx] = rowError;
+        }
+      });
+
+      setErrors(allErrors);
+      setData(jsonData);
+    };
+
+    reader.readAsBinaryString(file);
+  };
+
+  return (
+    <div>
+      <input type="file" onChange={handleFileUpload} />
+      <table border="1" cellPadding="5">
+        <thead>
+          <tr>
+            {data[0] && Object.keys(data[0]).map((col) => (
+              <th key={col}>{col}</th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {data.map((row, rowIndex) => (
+            <tr key={rowIndex}>
+              {Object.entries(row).map(([col, val]) => {
+                const cellError = errors[rowIndex]?.[col];
+                return (
+                  <td
+                    key={col}
+                    className={cellError ? 'invalid-cell' : ''}
+                    title={cellError || ''}
+                  >
+                    {val}
+                  </td>
+                );
+              })}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+
+    
+    </div>
+  );
+}
+
+export default ExcelUploader;
+`;
+
   const queries = [
     // Basic SELECT
     `// SQL: SELECT * FROM customers;
@@ -228,6 +324,30 @@ const ordersByCountry = customers.reduce((acc, c) => {
             }}
           >
             {codeString1}
+          </SyntaxHighlighter>
+        </div>
+      </div>
+      <div className="w-full max-w-5xl bg-[var(--subboard)] border border-[var(--border)] rounded-xl shadow-lg overflow-hidden">
+        {/* Card Header */}
+        <div className="bg-[var(--darkmain)] px-4 py-3 border-b border-[var(--border3)]">
+          <h2 className="text-[var(--light)] jet-normal text-lg">
+            React Component: <span className="text-[var(--l1)]">NewExcel</span>
+          </h2>
+        </div>
+
+        {/* Syntax Highlighted Code */}
+        <div className="overflow-auto">
+          <SyntaxHighlighter
+            language="javascript"
+            style={oneDark}
+            customStyle={{
+              margin: 0,
+              padding: "1rem",
+              fontFamily: "var(--font-jet)",
+              fontSize: "0.9rem",
+            }}
+          >
+            {codeString2}
           </SyntaxHighlighter>
         </div>
       </div>
