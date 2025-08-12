@@ -97,56 +97,107 @@ export default function NewExcel() {
 `;
 
   const queries = [
+    // Basic SELECT
     `// SQL: SELECT * FROM customers;
 const allCustomers = data;`,
 
+    // WHERE clause
     `// SQL: SELECT * FROM customers WHERE Status = 'Active';
 const activeCustomers = data.filter(c => c.Status === "Active");`,
 
+    // Multiple conditions in WHERE
     `// SQL: SELECT * FROM customers WHERE Status = 'Active' AND Country = 'India';
 const indianActiveCustomers = data.filter(
   c => c.Status === "Active" && c.Country === "India"
 );`,
 
+    // ORDER BY ASC
     `// SQL: SELECT * FROM customers ORDER BY Name ASC;
 const sortedByName = [...data].sort((a, b) =>
   a.Name.localeCompare(b.Name)
 );`,
 
+    // ORDER BY DESC
     `// SQL: SELECT * FROM customers ORDER BY Name DESC;
 const sortedByNameDesc = [...data].sort((a, b) =>
   b.Name.localeCompare(a.Name)
 );`,
 
+    // ORDER BY date
     `// SQL: SELECT * FROM customers ORDER BY LastContactDate DESC;
 const sortedByDateDesc = [...data].sort((a, b) =>
-  new Date(a["Last Contact Date"]) < new Date(b["Last Contact Date"]) ? 1 : -1
+  new Date(b["Last Contact Date"]) - new Date(a["Last Contact Date"])
 );`,
 
+    // GROUP BY
     `// SQL: SELECT Status, COUNT(*) FROM customers GROUP BY Status;
 const groupByStatus = data.reduce((acc, c) => {
   acc[c.Status] = (acc[c.Status] || 0) + 1;
   return acc;
 }, {});`,
 
+    // COUNT
     `// SQL: SELECT COUNT(*) FROM customers;
 const totalCount = data.length;`,
 
+    // DISTINCT
     `// SQL: SELECT DISTINCT Country FROM customers;
 const distinctCountries = [...new Set(data.map(c => c.Country))];`,
 
+    // LIMIT
     `// SQL: SELECT * FROM customers LIMIT 5;
 const firstFive = data.slice(0, 5);`,
 
+    // LIKE
     `// SQL: SELECT * FROM customers WHERE Name LIKE '%Sharma%';
 const nameContainsSharma = data.filter(c =>
   c.Name.toLowerCase().includes("sharma")
 );`,
 
+    // MAX
     `// SQL: SELECT MAX(LastContactDate) FROM customers;
 const latestDate = data.reduce((max, c) =>
   new Date(c["Last Contact Date"]) > new Date(max) ? c["Last Contact Date"] : max
 , data[0]["Last Contact Date"]);`,
+
+    // JOIN
+    `// SQL: SELECT c.Name, o.OrderID FROM customers c JOIN orders o ON c.CustomerID = o.CustomerID;
+const joinData = customers.flatMap(c => 
+  orders
+    .filter(o => o.CustomerID === c.CustomerID)
+    .map(o => ({ Name: c.Name, OrderID: o.OrderID }))
+);`,
+
+    // INNER JOIN
+    `// SQL: SELECT * FROM customers c INNER JOIN orders o ON c.CustomerID = o.CustomerID;
+const innerJoin = customers
+  .map(c => {
+    const match = orders.find(o => o.CustomerID === c.CustomerID);
+    return match ? { ...c, ...match } : null;
+  })
+  .filter(Boolean);`,
+
+    // LEFT JOIN
+    `// SQL: SELECT * FROM customers c LEFT JOIN orders o ON c.CustomerID = o.CustomerID;
+const leftJoin = customers.map(c => {
+  const match = orders.find(o => o.CustomerID === c.CustomerID);
+  return { ...c, ...(match || {}) };
+});`,
+
+    // RIGHT JOIN
+    `// SQL: SELECT * FROM customers c RIGHT JOIN orders o ON c.CustomerID = o.CustomerID;
+const rightJoin = orders.map(o => {
+  const match = customers.find(c => c.CustomerID === o.CustomerID);
+  return { ...(match || {}), ...o };
+});`,
+
+    // Aggregation with JOIN
+    `// SQL: SELECT c.Country, COUNT(o.OrderID) FROM customers c JOIN orders o ON c.CustomerID = o.CustomerID GROUP BY c.Country;
+const ordersByCountry = customers.reduce((acc, c) => {
+  const count = orders.filter(o => o.CustomerID === c.CustomerID).length;
+  acc[c.Country] = (acc[c.Country] || 0) + count;
+  return acc;
+}, {});`,
   ];
 
   return (
@@ -155,7 +206,6 @@ const latestDate = data.reduce((max, c) =>
       <h1 className="text-[var(--light)] text-3xl jet-bold mb-6">
         📄 Show Excel File Code
       </h1>
-
       {/* Card Container */}
       <div className="w-full max-w-5xl bg-[var(--subboard)] border border-[var(--border)] rounded-xl shadow-lg overflow-hidden">
         {/* Card Header */}
@@ -180,12 +230,17 @@ const latestDate = data.reduce((max, c) =>
             {codeString1}
           </SyntaxHighlighter>
         </div>
+      </div>
+      <div className="w-full max-w-5xl bg-[var(--subboard)] border border-[var(--border)] rounded-xl shadow-lg overflow-hidden">
+        {/* Card Header */}
+        <div className="bg-[var(--darkmain)] px-4 py-3 border-b border-[var(--border3)]">
+          <h2 className="text-[var(--light)] jet-normal text-lg">
+            React Component: <span className="text-[var(--l1)]">NewExcel</span>
+          </h2>
+        </div>
 
+        {/* Syntax Highlighted Code */}
         <div className="overflow-auto">
-          {" "}
-          <h1 className="text-[var(--light)] text-3xl jet-bold mb-6">
-            SQL Queries
-          </h1>
           {queries.map((query, index) => (
             <div key={index}>
               <h3>Example {index + 1}</h3>
@@ -204,7 +259,7 @@ const latestDate = data.reduce((max, c) =>
             </div>
           ))}
         </div>
-      </div>
+      </div>{" "}
     </div>
   );
 }

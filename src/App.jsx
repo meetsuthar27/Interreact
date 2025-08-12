@@ -10,6 +10,7 @@ import Custom from "./components/user-components/trial/Custom";
 import DummyUserCard from "./components/site-components/DummyUserCard";
 import NewExcel from "./NewExcel";
 import ReactCodes from "./ReactCodes";
+import Prac from "./Prac";
 
 // import ComponentsPage from "./pages/Components";
 
@@ -29,8 +30,9 @@ const App = () => {
     // <DummyUserCard />
 
     <>
-      <NewExcel />
+      {/* <NewExcel /> */}
       <ReactCodes />
+      {/* <Prac /> */}
     </>
   );
 };
